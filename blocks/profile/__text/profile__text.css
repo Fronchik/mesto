@@ -1,0 +1,20 @@
+.profile__text {
+  margin: 0 auto 0 0;
+  width: 100%;
+
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  /* как сделать высоту блока 18, если высота строки 22? */
+
+  color: #FFFFFF;
+}
+
+@media (max-width: 768px) {
+  .profile__text {
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+  }
+}

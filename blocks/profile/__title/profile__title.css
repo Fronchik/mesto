@@ -1,0 +1,19 @@
+.profile__title {
+  margin: 0 auto;
+  width: 100%;
+
+  font-style: normal;
+  font-weight: 500;
+  font-size: 42px;
+  line-height: 48px;
+  /* как сделать высоту блока 38, а строку 48??? */
+
+  color: #FFFFFF;
+}
+
+@media (max-width: 768px) {
+  .profile__title {
+    font-size: 27px;
+    line-height: 33px;
+  }
+}
