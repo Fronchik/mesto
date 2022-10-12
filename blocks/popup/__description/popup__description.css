@@ -1,0 +1,25 @@
+.popup__description {
+  max-width: 358px;
+  width: 100%;
+  padding: 0 0 13px;
+  margin-top: 30px;
+  margin-left: 36px;
+
+  border: none;
+  border-bottom: 1px rgba(0, 0, 0, 0.2) solid;
+
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.popup__description:focus {
+  outline: none;
+}
+
+@media (max-width: 768px) {
+  .popup__description {
+    max-width: 238px;
+    margin-left: 22px;
+  }
+}

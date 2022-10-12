@@ -19,6 +19,5 @@
 }
 
 .picture__button:active {
-  /* transition: opacity 0s; */
   background-image: url(../../../images/BlackLike.svg);
 }

@@ -1,7 +1,5 @@
 .profile__image {
-  /* margin: 0 auto; */
   max-width: 120px;
-  /* min-height: 120px; */
   width: 100%;
   border-radius: 50%;
 }
