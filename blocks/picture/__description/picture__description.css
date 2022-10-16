@@ -1,5 +1,6 @@
 .picture__description {
   max-width: 282px;
+  max-height: 79px;
   display: flex;
   justify-content: space-between;
   align-items: baseline;

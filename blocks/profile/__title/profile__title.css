@@ -8,6 +8,10 @@
   line-height: 48px;
 
   color: #FFFFFF;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 @media (max-width: 768px) {

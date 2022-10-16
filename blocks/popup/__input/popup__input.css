@@ -1,4 +1,4 @@
-.popup__description {
+.popup__input {
   max-width: 358px;
   width: 100%;
   padding: 0 0 13px;
@@ -13,12 +13,12 @@
   line-height: 17px;
 }
 
-.popup__description:focus {
+.popup__input:focus {
   outline: none;
 }
 
 @media (max-width: 768px) {
-  .popup__description {
+  .popup__input {
     max-width: 238px;
     margin-left: 22px;
   }
