@@ -4,7 +4,7 @@
   width: 100%;
 
   grid-template-columns: 294px;
-  gap: 16px 18px;
+  gap: 16px;
   align-items: center;
 }
 
@@ -14,7 +14,7 @@
     margin-top: 26px;
 
     grid-template-columns: 189px;
-    gap: 14px 10px;
+    gap: 14px;
     justify-content: center;
     text-align: center;
   }

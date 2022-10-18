@@ -2,7 +2,6 @@
   margin: 0 auto;
   width: 100%;
 
-  font-style: normal;
   font-weight: 500;
   font-size: 42px;
   line-height: 48px;
@@ -18,5 +17,6 @@
   .profile__title {
     font-size: 27px;
     line-height: 33px;
+    vertical-align: top;
   }
 }
