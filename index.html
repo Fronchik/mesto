@@ -62,48 +62,7 @@
             </button>
           </div>
         </li>
-        <li class="picture">
-          <button class="picture__basket" aria-label="Корзина для удаления фото" type="button">
-          </button>
-          <img src="./images/Elbrus.jpg" alt="Гора Эльбрус" class="picture__image">
-          <div class="picture__description">
-            <h2 class="picture__name">Гора Эльбрус</h2>
-            <button class="picture__button" aria-label="Кнопка, отмечающая понравившееся фото" type="button">
-            </button>
-          </div>
-        </li>
-        <li class="picture">
-          <button class="picture__basket" aria-label="Корзина для удаления фото" type="button">
-          </button>
-          <img src="./images/Dombai.jpg" alt="Домбай" class="picture__image">
-          <div class="picture__description">
-            <h2 class="picture__name">Домбай</h2>
-            <button class="picture__button" aria-label="Кнопка, отмечающая понравившееся фото" type="button">
-            </button>
-          </div>
-        </li>
-        <li class="picture">
-          <button class="picture__basket" aria-label="Корзина для удаления фото" type="button">
-          </button>
-          <img src="./images/Karachaevsk.jpg" alt="Карачаевск" class="picture__image">
-          <div class="picture__description">
-            <h2 class="picture__name">Карачаевск</h2>
-            <button class="picture__button" aria-label="Кнопка, отмечающая понравившееся фото" type="button">
-            </button>
-          </div>
-        </li>
       </ul>
-      <!-- ниже удалить див, как только его сверстаю, он будет в самом конце верстки -->
-      <div class="popup__add">
-        <button class="popup__close-button" aria-label="Кнопка закрытия" type="button"></button>
-        <h2 class="popup__title">Новое место</h2>
-        <form class="popup__form">
-          <input class="popup__name popup__name_color" name="name" type="text" value="Название">
-          <input class="popup__description popup__description_color" name="description" type="text"
-            value="Ссылка на картинку">
-          <button class="popup__save" aria-label="Кнопка сохранения" type="submit">Создать</button>
-        </form>
-      </div>
     </section>
   </main>
   <footer class="footer">
@@ -130,6 +89,18 @@
       </form>
     </div>
   </section>
+  <template id="card-template">
+    <li class="picture">
+      <button class="picture__basket" aria-label="Корзина для удаления фото" type="button">
+      </button>
+      <img src="" alt="" class="picture__image">
+      <div class="picture__description">
+        <h2 class="picture__name"></h2>
+        <button class="picture__button" aria-label="Кнопка, отмечающая понравившееся фото" type="button">
+        </button>
+      </div>
+    </li>
+  </template>
   <script src="./script/script.js"></script>
 </body>
 
