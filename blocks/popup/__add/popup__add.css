@@ -1,0 +1,21 @@
+.popup__add {
+    position: relative;
+    max-width: 430px;
+    min-height: 330px;
+    margin: 195px auto 0;
+    width: 100%;
+
+    background-color: #ffffff;
+    border-radius: 10px;
+
+    justify-content: center;
+    align-items: center;
+}
+
+
+@media (max-width: 768px) {
+    .popup__add {
+        max-width: 282px;
+        margin-top: 122px;
+    }
+}
