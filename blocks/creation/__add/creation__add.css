@@ -1,8 +1,8 @@
-.popup__add {
+.creation__add {
     position: relative;
     max-width: 430px;
     min-height: 330px;
-    margin: 195px auto 0;
+    margin: 105px auto 0;
     width: 100%;
 
     background-color: #ffffff;
@@ -12,10 +12,9 @@
     align-items: center;
 }
 
-
 @media (max-width: 768px) {
-    .popup__add {
+    .creation__add {
         max-width: 282px;
-        margin-top: 122px;
+        margin-top: 123px;
     }
 }

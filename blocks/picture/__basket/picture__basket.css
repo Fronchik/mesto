@@ -1,5 +1,6 @@
 .picture__basket {
-    margin: 20px 20px 243px 244px;
+    margin-top: 20px;
+    margin-left: 244px;
     min-width: 18px;
     min-height: 19px;
     position: absolute;

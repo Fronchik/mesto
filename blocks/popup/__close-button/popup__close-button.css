@@ -13,6 +13,7 @@
   border: none;
 
   cursor: pointer;
+  background-color: transparent;
 }
 
 .popup__close-button:hover {
