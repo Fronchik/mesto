@@ -16,9 +16,6 @@
 
 .creation__name:focus {
     color: #000000;
-}
-
-.creation__name:focus {
     outline: none;
 }
 

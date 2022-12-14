@@ -16,9 +16,6 @@
 
 .creation__link:focus {
     color: #000000;
-}
-
-.creation__link:focus {
     outline: none;
 }
 
