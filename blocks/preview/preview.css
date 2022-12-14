@@ -1,0 +1,15 @@
+.preview {
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+    position: fixed;
+    transition: opacity 1s ease-out;
+    opacity: 0;
+
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.preview:active {
+    transition: opacity 1s ease-out;
+    opacity: 0;
+}

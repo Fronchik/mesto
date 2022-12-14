@@ -1,17 +1,17 @@
-const overlayEl = document.querySelector('.popup');
-const openPopupButton = document.querySelector('.profile__edit-button');
-const closePopupButton = overlayEl.querySelector('.popup__close-button')
+const profileOverlay = document.querySelector('.popup');
+const openProfilePopupButton = document.querySelector('.profile__edit-button');
+const closeProfilePopupButton = profileOverlay.querySelector('.popup__close-button')
 
-const toggleOverlay = () => {
-  overlayEl.classList.toggle('popup__opened');
+const toggleProfileOverlay = () => {
+  profileOverlay.classList.toggle('popup__opened');
 }
 
-openPopupButton.addEventListener('click', () => {
-  toggleOverlay();
+openProfilePopupButton.addEventListener('click', () => {
+  toggleProfileOverlay();
 })
 
-closePopupButton.addEventListener('click', () => {
-  toggleOverlay();
+closeProfilePopupButton.addEventListener('click', () => {
+  toggleProfileOverlay();
 })
 
 const profileForm = document.querySelector('.popup__form');
@@ -19,7 +19,7 @@ const nameInput = document.querySelector('.popup__name');
 const jobInput = document.querySelector('.popup__description');
 
 const formSubmitHandler = (e) => {
-  evt.preventDefault();
+  e.preventDefault();
 
   const name = nameInput.value;
   const job = jobInput.value;
@@ -27,7 +27,7 @@ const formSubmitHandler = (e) => {
   document.querySelector('.profile__title').textContent = name;
   document.querySelector('.profile__text').textContent = job;
 
-  toggleOverlay();
+  toggleProfileOverlay();
 }
 
 profileForm.addEventListener('submit', formSubmitHandler);
@@ -69,6 +69,17 @@ const handleDeleteClick = (e) => {
   e.target.parentElement.remove();
 }
 
+const preview = document.querySelector('.preview');
+const closePreviewButton = preview.querySelector('.preview__close-button')
+
+const previewToggle = () => {
+  preview.classList.toggle('preview__opened');
+}
+
+closePreviewButton.addEventListener('click', () => {
+  previewToggle();
+})
+
 const createCard = (title, link) => {
   const cardElement = cardTemplate.cloneNode(true);
   cardElement.querySelector('.picture__name').textContent = title;
@@ -77,6 +88,12 @@ const createCard = (title, link) => {
   cardImg.alt = title;
   cardElement.querySelector('.picture__button').addEventListener('click', handleLikeClick);
   cardElement.querySelector('.picture__basket').addEventListener('click', handleDeleteClick);
+  cardElement.querySelector('.picture__image').addEventListener('click', () => {
+    previewToggle();
+    preview.querySelector('.preview__image').src = link;
+    preview.querySelector('.preview__name').textContent = title;
+  });
+
   return cardElement;
 }
 
@@ -91,60 +108,63 @@ const loadCards = (cardItems) => {
 
 loadCards(initialCards);
 
-
 const overlayCreation = document.querySelector('.creation');
 const openCreationButton = document.querySelector('.profile__add-button');
 const closeCreationButton = overlayCreation.querySelector('.creation__close-button')
 
-const toggleOverlayCreation = () => {
+const toggleProfileOverlayCreation = () => {
   overlayCreation.classList.toggle('creation__opened');
 }
 
 openCreationButton.addEventListener('click', () => {
-  toggleOverlayCreation();
+  toggleProfileOverlayCreation();
 })
 
 closeCreationButton.addEventListener('click', () => {
-  toggleOverlayCreation();
+  toggleProfileOverlayCreation();
 })
 
 const cardForm = document.querySelector('.creation__form');
 const cardNameInput = document.querySelector('.creation__name');
 const cardLinkInput = document.querySelector('.creation__link');
 
+
+const nameText = 'Название';
+const linkText = 'Ссылка на картинку';
+
 cardNameInput.addEventListener('focus', (e) => {
-  if (e.target.value === 'Название') {
+  if (e.target.value === nameText) {
     e.target.value = '';
   };
 })
 
 cardNameInput.addEventListener('blur', (e) => {
   if (e.target.value === '') {
-    e.target.value = 'Название';
+    e.target.value = nameText;
   }
 })
 
 cardLinkInput.addEventListener('focus', (e) => {
-  if (e.target.value === 'Ссылка на картинку') {
+  if (e.target.value === linkText) {
     e.target.value = '';
   }
 })
 
 cardLinkInput.addEventListener('blur', (e) => {
   if (e.target.value === '') {
-    e.target.value = 'Ссылка на картинку';
+    e.target.value = linkText;
   }
 })
 
 const formNewCard = (e) => {
-  evt.preventDefault();
+  e.preventDefault();
 
   const name = cardNameInput.value;
   const link = cardLinkInput.value;
 
   const card = createCard(name, link);
   cardContainer.prepend(card);
-  toggleOverlayCreation();
+  toggleProfileOverlayCreation();
 }
 
 cardForm.addEventListener('submit', formNewCard);
