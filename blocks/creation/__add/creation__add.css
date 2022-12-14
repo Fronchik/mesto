@@ -1,0 +1,20 @@
+.creation__add {
+    position: relative;
+    max-width: 430px;
+    min-height: 330px;
+    margin: 105px auto 0;
+    width: 100%;
+
+    background-color: #ffffff;
+    border-radius: 10px;
+
+    justify-content: center;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    .creation__add {
+        max-width: 282px;
+        margin-top: 123px;
+    }
+}

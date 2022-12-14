@@ -31,55 +31,17 @@
     </section>
     <section class="pictures">
       <ul class="pictures__list">
-        <li class="picture">
-          <img src="./images/Karachaevsk.jpg" alt="Карачаевск" class="picture__image">
-          <div class="picture__description">
-            <h2 class="picture__name">Карачаевск</h2>
-            <button class="picture__button" aria-label="Кнопка, отмечающая понравившееся фото" type="button">
-            </button>
-          </div>
-        </li>
-        <li class="picture">
-          <img src="./images/Elbrus.jpg" alt="Гора Эльбрус" class="picture__image">
-          <div class="picture__description">
-            <h2 class="picture__name">Гора Эльбрус</h2>
-            <button class="picture__button" aria-label="Кнопка, отмечающая понравившееся фото" type="button">
-            </button>
-          </div>
-        </li>
-        <li class="picture">
-          <img src="./images/Dombai.jpg" alt="Домбай" class="picture__image">
-          <div class="picture__description">
-            <h2 class="picture__name">Домбай</h2>
-            <button class="picture__button" aria-label="Кнопка, отмечающая понравившееся фото" type="button">
-            </button>
-          </div>
-        </li>
-        <li class="picture">
-          <img src="./images/Elbrus.jpg" alt="Гора Эльбрус" class="picture__image">
-          <div class="picture__description">
-            <h2 class="picture__name">Гора Эльбрус</h2>
-            <button class="picture__button" aria-label="Кнопка, отмечающая понравившееся фото" type="button">
-            </button>
-          </div>
-        </li>
-        <li class="picture">
-          <img src="./images/Dombai.jpg" alt="Домбай" class="picture__image">
-          <div class="picture__description">
-            <h2 class="picture__name">Домбай</h2>
-            <button class="picture__button" aria-label="Кнопка, отмечающая понравившееся фото" type="button">
-            </button>
-          </div>
-        </li>
-        <li class="picture">
-          <img src="./images/Karachaevsk.jpg" alt="Карачаевск" class="picture__image">
-          <div class="picture__description">
-            <h2 class="picture__name">Карачаевск</h2>
-            <button class="picture__button" aria-label="Кнопка, отмечающая понравившееся фото" type="button">
-            </button>
-          </div>
-        </li>
       </ul>
+    </section>
+    <section class="preview">
+      <div class="preview__container">
+        <figure class="preview__photo">
+          <button class="preview__close-button" aria-label="Кнопка закрытия" type="button">
+          </button>
+          <img src="" alt="" class="preview__image">
+          <figcaption class="preview__name"></figcaption>
+        </figure>
+      </div>
     </section>
   </main>
   <footer class="footer">
@@ -98,7 +60,30 @@
       </div>
     </div>
   </section>
-  <script src="./scripts/index.js"></script>
+  <section class="creation">
+    <div class="creation__add">
+      <button class="creation__close-button" aria-label="Кнопка закрытия" type="button"></button>
+      <h2 class="creation__title">Новое место</h2>
+      <form class="creation__form">
+        <input class="creation__name" name="name" type="text" placeholder="Название">
+        <input class="creation__link" name="link" type="src" placeholder="Ссылка на картинку">
+        <button class="creation__create" aria-label="Кнопка создания" type="submit">Создать</button>
+      </form>
+    </div>
+  </section>
+  <template id="card-template">
+    <li class="picture">
+      <button class="picture__basket" aria-label="Корзина для удаления фото" type="button">
+      </button>
+      <img src="" alt="" class="picture__image">
+      <div class="picture__description">
+        <h2 class="picture__name"></h2>
+        <button class="picture__button" aria-label="Кнопка, отмечающая понравившееся фото" type="button">
+        </button>
+      </div>
+    </li>
+  </template>
+  <script src="./script/script.js"></script>
 </body>
 
 </html>
