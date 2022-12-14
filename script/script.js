@@ -90,7 +90,9 @@ const createCard = (title, link) => {
   cardElement.querySelector('.picture__basket').addEventListener('click', handleDeleteClick);
   cardElement.querySelector('.picture__image').addEventListener('click', () => {
     previewToggle();
-    preview.querySelector('.preview__image').src = link;
+    const previewImg = preview.querySelector('.preview__image');
+    previewImg.src = link;
+    previewImg.alt = title;
     preview.querySelector('.preview__name').textContent = title;
   });
 
