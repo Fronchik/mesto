@@ -33,21 +33,12 @@
       <ul class="pictures__list">
       </ul>
     </section>
-    <section class="preview">
-      <div class="preview__container">
-        <figure class="preview__photo">
-          <button class="preview__close-button" aria-label="Кнопка закрытия" type="button">
-          </button>
-          <img src="#" alt="#" class="preview__image">
-          <figcaption class="preview__name"></figcaption>
-        </figure>
-      </div>
-    </section>
   </main>
   <footer class="footer">
     <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
   </footer>
-  <section class="popup">
+
+  <section class="popup profile-popup">
     <div class="popup__container">
       <div class="popup__content">
         <button class="popup__close-button" aria-label="Кнопка закрытия" type="button"></button>
@@ -60,15 +51,30 @@
       </div>
     </div>
   </section>
-  <section class="creation">
-    <div class="creation__add">
-      <button class="creation__close-button" aria-label="Кнопка закрытия" type="button"></button>
-      <h2 class="creation__title">Новое место</h2>
-      <form class="creation__form">
-        <input class="creation__name" name="name" type="text" placeholder="Название">
-        <input class="creation__link" name="link" type="src" placeholder="Ссылка на картинку">
-        <button class="creation__create" aria-label="Кнопка создания" type="submit">Создать</button>
-      </form>
+
+  <section class="popup creation-popup">
+    <div class="popup__container">
+      <div class="popup__content">
+        <button class="popup__close-button" aria-label="Кнопка закрытия" type="button"></button>
+        <h2 class="popup__title">Новое место</h2>
+        <form class="popup__form" name="popup-form">
+          <input class="popup__input popup__input_name" name="name" type="text" placeholder="Название">
+          <input class="popup__input popup__input_description" name="link" type="text" placeholder="Ссылка на картинку">
+          <button class="popup__save" aria-label="Кнопка создания" type="submit">Создать</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="popup preview-popup">
+    <div class="popup__container">
+      <div class="preview">
+        <figure class="preview__photo">
+          <button class="popup__close-button" aria-label="Кнопка закрытия" type="button"></button>
+          <img src="#" alt="#" class="preview__image">
+          <figcaption class="preview__name"></figcaption>
+        </figure>
+      </div>
     </div>
   </section>
   <template id="card-template">

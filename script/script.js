@@ -1,36 +1,28 @@
-const profileOverlay = document.querySelector('.popup');
+const profilePopup = document.querySelector('.profile-popup');
 const openProfilePopupButton = document.querySelector('.profile__edit-button');
-const closeProfilePopupButton = profileOverlay.querySelector('.popup__close-button')
 
-const toggleProfileOverlay = () => {
-  profileOverlay.classList.toggle('popup__opened');
-}
+const profileForm = profilePopup.querySelector('.popup__form');
+const nameInput = profilePopup.querySelector('.popup__input_name');
+const jobInput = profilePopup.querySelector('.popup__input_description');
 
-openProfilePopupButton.addEventListener('click', () => {
-  toggleProfileOverlay();
-})
+const profileTitle = document.querySelector('.profile__title');
+const profileText = document.querySelector('.profile__text');
 
-closeProfilePopupButton.addEventListener('click', () => {
-  toggleProfileOverlay();
-})
+const cardTemplate = document.querySelector('#card-template').content.querySelector('.picture');
 
-const profileForm = document.querySelector('.popup__form');
-const nameInput = document.querySelector('.popup__name');
-const jobInput = document.querySelector('.popup__description');
+const previewPopup = document.querySelector('.preview-popup');
+const previewImg = previewPopup.querySelector('.preview__image');
+const previewName = previewPopup.querySelector('.preview__name');
 
-const formSubmitHandler = (e) => {
-  e.preventDefault();
+const cardContainer = document.querySelector('.pictures__list');
 
-  const name = nameInput.value;
-  const job = jobInput.value;
+const popupCreation = document.querySelector('.creation-popup');
+const openCreationButton = document.querySelector('.profile__add-button');
 
-  document.querySelector('.profile__title').textContent = name;
-  document.querySelector('.profile__text').textContent = job;
+const cardForm = popupCreation.querySelector('.popup__form');
+const cardNameInput = popupCreation.querySelector('.popup__input_name');
+const cardLinkInput = popupCreation.querySelector('.popup__input_description');
 
-  toggleProfileOverlay();
-}
-
-profileForm.addEventListener('submit', formSubmitHandler);
 
 const initialCards = [
   {
@@ -59,26 +51,42 @@ const initialCards = [
   }
 ];
 
-const cardTemplate = document.querySelector('#card-template').content.querySelector('.picture');
+const openPopup = (popup) => {
+  popup.classList.add('popup_opened');
+}
+
+const closePopup = (popup) => {
+  popup.classList.remove('popup_opened');
+}
+
+document.querySelectorAll('.popup__close-button').forEach(button => {
+  button.addEventListener('click', (e) => {
+    closePopup(e.target.closest('.popup'));
+  });
+});
+
+openProfilePopupButton.addEventListener('click', () => {
+  nameInput.value = profileTitle.textContent;
+  jobInput.value = profileText.textContent;
+  openPopup(profilePopup);
+})
+
+const handleProfileFormSubmit = (e) => {
+  e.preventDefault();
+  profileTitle.textContent = nameInput.value;
+  profileText.textContent = jobInput.value;
+  closePopup(profilePopup);
+}
+
+profileForm.addEventListener('submit', handleProfileFormSubmit);
 
 const handleLikeClick = (e) => {
   e.target.classList.toggle("picture__button_active");
 }
 
 const handleDeleteClick = (e) => {
-  e.target.parentElement.remove();
+  e.target.closest('.picture').remove();
 }
-
-const preview = document.querySelector('.preview');
-const closePreviewButton = preview.querySelector('.preview__close-button')
-
-const previewToggle = () => {
-  preview.classList.toggle('preview__opened');
-}
-
-closePreviewButton.addEventListener('click', () => {
-  previewToggle();
-})
 
 const createCard = (title, link) => {
   const cardElement = cardTemplate.cloneNode(true);
@@ -89,17 +97,14 @@ const createCard = (title, link) => {
   cardElement.querySelector('.picture__button').addEventListener('click', handleLikeClick);
   cardElement.querySelector('.picture__basket').addEventListener('click', handleDeleteClick);
   cardElement.querySelector('.picture__image').addEventListener('click', () => {
-    previewToggle();
-    const previewImg = preview.querySelector('.preview__image');
+    openPopup(previewPopup);
     previewImg.src = link;
     previewImg.alt = title;
-    preview.querySelector('.preview__name').textContent = title;
+    previewName.textContent = title;
   });
 
   return cardElement;
 }
-
-const cardContainer = document.querySelector('.pictures__list');
 
 const loadCards = (cardItems) => {
   cardItems.forEach(item => {
@@ -110,36 +115,18 @@ const loadCards = (cardItems) => {
 
 loadCards(initialCards);
 
-const overlayCreation = document.querySelector('.creation');
-const openCreationButton = document.querySelector('.profile__add-button');
-const closeCreationButton = overlayCreation.querySelector('.creation__close-button')
-
-const toggleProfileOverlayCreation = () => {
-  overlayCreation.classList.toggle('creation__opened');
-}
-
 openCreationButton.addEventListener('click', () => {
-  toggleProfileOverlayCreation();
+  openPopup(popupCreation);
 })
 
-closeCreationButton.addEventListener('click', () => {
-  toggleProfileOverlayCreation();
-})
-
-const cardForm = document.querySelector('.creation__form');
-const cardNameInput = document.querySelector('.creation__name');
-const cardLinkInput = document.querySelector('.creation__link');
-
-
-const formNewCard = (e) => {
+const handleCardFormSubmit = (e) => {
   e.preventDefault();
-
   const name = cardNameInput.value;
   const link = cardLinkInput.value;
-
   const card = createCard(name, link);
   cardContainer.prepend(card);
-  toggleProfileOverlayCreation();
+  closePopup(popupCreation);
+  e.target.reset();
 }
 
-cardForm.addEventListener('submit', formNewCard);
+cardForm.addEventListener('submit', handleCardFormSubmit);
