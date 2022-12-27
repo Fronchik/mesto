@@ -17,6 +17,10 @@
   outline: none;
 }
 
+.popup__input:invalid {
+  border-bottom: 1px #FF0000 solid;
+}
+
 @media (max-width: 768px) {
   .popup__input {
     max-width: 238px;
