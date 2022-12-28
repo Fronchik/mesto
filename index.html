@@ -68,7 +68,8 @@
           <input id="link" class="popup__input popup__input_description" name="link" type="url"
             placeholder="Ссылка на картинку" required>
           <span id="link-error" class="error"></span>
-          <button class="popup__save" aria-label="Кнопка создания" type="submit">Создать</button>
+          <button class="popup__save popup__invalid" aria-label="Кнопка создания" type="submit"
+            disabled="disabled">Создать</button>
         </form>
       </div>
     </div>
@@ -98,6 +99,7 @@
     </li>
   </template>
   <script src="./script/script.js"></script>
+  <script src="./script/validate.js"></script>
 </body>
 
 </html>
