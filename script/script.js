@@ -23,12 +23,6 @@ const cardForm = popupCreation.querySelector('.popup__form');
 const cardNameInput = popupCreation.querySelector('.popup__input_name');
 const cardLinkInput = popupCreation.querySelector('.popup__input_description');
 
-// переменные для 6-ой проектной
-// const error = profilePopup.querySelector('#name-input-error');
-const forms = [...document.querySelectorAll('.popup__form')];
-const inputs = [...document.querySelectorAll('.popup__input')];
-
-
 
 const initialCards = [
   {
@@ -137,52 +131,71 @@ const handleCardFormSubmit = (e) => {
 
 cardForm.addEventListener('submit', handleCardFormSubmit);
 
-
+// переменные для 6-ой проектной
+// const error = profilePopup.querySelector('#name-input-error');
+const forms = [...document.querySelectorAll('.popup__form')];
+const inputs = [...document.querySelectorAll('.popup__input')];
 
 // 6 проектная
-const checkInputValidity = (input) => {
+const checkInputValidity = (input, objects) => {
   const error = document.querySelector(`#${input.id}-error`);
   if (input.validity.valid) {
     error.textContent = '';
+    error.classList.remove(objects.errorClass);
+    input.classList.remove(objects.inputErrorClass);
   } else {
     error.textContent = input.validationMessage;
+    error.classList.add(objects.errorClass);
+    input.classList.add(objects.inputErrorClass);
   };
 }
 
-const disabledChangeButton = (inputs, button) => {
+const disabledChangeButton = (inputs, button, objects) => {
   const formValid = inputs.every(input => input.validity.valid);
   if (formValid) {
-    button.classList.remove('popup__invalid');
+    button.classList.remove(objects.inactiveButtonClass);
     button.disabled = '';
   } else {
-    button.classList.add('popup__invalid');
+    button.classList.add(objects.inactiveButtonClass);
     button.disabled = 'disabled';
   };
 };
 
+const enableValidation = (objects) => {
+  const forms = [...document.querySelectorAll(objects.formSelector)];
 
-forms.forEach(form => {
-  const inputs = [...form.querySelectorAll('.popup__input')];
-  const button = form.querySelector('.popup__save');
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-  });
-
-  inputs.forEach(input => {
-    input.addEventListener('input', () => {
-      checkInputValidity(input);
-      disabledChangeButton(inputs, button);
+  forms.forEach(form => {
+    const inputs = [...form.querySelectorAll(objects.inputSelector)];
+    const button = form.querySelector(objects.submitButtonSelector);
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
     });
+
+    inputs.forEach(input => {
+      input.addEventListener('input', () => {
+        checkInputValidity(input, objects);
+        disabledChangeButton(inputs, button, objects);
+      });
+    });
+
   });
 
-});
+};
+
+// const pressPopupEscape = (e) => {
+//   if (e.key === 'Escape') {
+//     const openModal = document.querySelector('.popup')
+//   };
+// };
+
+
 
 
 enableValidation({
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_type_error',
+  submitButtonSelector: '.popup__save',
+  inactiveButtonClass: 'popup__invalid',
+  inputErrorClass: 'popup__input_error',
   errorClass: 'popup__error_visible'
 });
