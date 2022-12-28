@@ -25,7 +25,9 @@ const cardLinkInput = popupCreation.querySelector('.popup__input_description');
 
 // переменные для 6-ой проектной
 // const error = profilePopup.querySelector('#name-input-error');
-const inputs = [...profilePopup.querySelectorAll('.popup__input')];
+const forms = [...document.querySelectorAll('.popup__form')];
+const inputs = [...document.querySelectorAll('.popup__input')];
+
 
 
 const initialCards = [
@@ -138,57 +140,49 @@ cardForm.addEventListener('submit', handleCardFormSubmit);
 
 
 // 6 проектная
+const checkInputValidity = (input) => {
+  const error = document.querySelector(`#${input.id}-error`);
+  if (input.validity.valid) {
+    error.textContent = '';
+  } else {
+    error.textContent = input.validationMessage;
+  };
+}
 
-inputs.forEach(input => {
-  input.addEventListener('input', () => {
-    const error = document.querySelector(`#${input.id}-error`);
-    if (input.validity.valid) {
-      error.textContent = '';
-    } else {
-      error.textContent = input.validationMessage;
-    };
+const disabledChangeButton = (inputs, button) => {
+  const formValid = inputs.every(input => input.validity.valid);
+  if (formValid) {
+    button.classList.remove('popup__invalid');
+    button.disabled = '';
+  } else {
+    button.classList.add('popup__invalid');
+    button.disabled = 'disabled';
+  };
+};
+
+
+forms.forEach(form => {
+  const inputs = [...form.querySelectorAll('.popup__input')];
+  const button = form.querySelector('.popup__save');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
   });
+
+  inputs.forEach(input => {
+    input.addEventListener('input', () => {
+      checkInputValidity(input);
+      disabledChangeButton(inputs, button);
+    });
+  });
+
 });
 
-// // Слушатель события input, profile
-// nameInput.addEventListener('input', (e) => {
-//   if (nameInput.value !== 'Привет') {
-//     error.textContent = 'Ошибка';
-//   } else {
-//     error.textContent = '';
-//   }
-// });
 
-// Функция, которая добавляет класс с ошибкой
-// const showNameInputError = (input) => {
-//   input.classList.add('popup__input_type_error');
-//   formError.textContent = errorMessage;
-//   formError.classList.add('name-input-error_active');
-// };
-
-// Функция, которая удаляет класс с ошибкой
-// const hideNameInputError = (input) => {
-//   input.classList.remove('popup__input_type_error');
-//   formError.classList.remove('name-input-error_active');
-//   formError.textContent = '';
-// };
-
-// Функция, которая проверяет валидность поля
-// const checkNameInputValidity = () => {
-//   if (!nameInput.validity.valid) {
-//     // Если поле не проходит валидацию, покажем ошибку
-//     showNameInputError(nameInput, nameInput.validationMessage);
-//   } else {
-//     // Если проходит, скроем
-//     hideNameInputError(nameInput);
-//   }
-// };
-
-// Вызовем функцию isValid на каждый ввод символа
-// nameInput.addEventListener('input', checkNameInputValidity);
-
-
-
-// jobInput.addEventListener('input', function (e) {
-//   console.log(e.target.validity.valid);
-// });
+enableValidation({
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+});
