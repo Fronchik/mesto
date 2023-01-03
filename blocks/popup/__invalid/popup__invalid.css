@@ -2,4 +2,9 @@
   opacity: 20%;
   color: rgba(0, 0, 0);
   background: #E5E5E5;
+  cursor: default;
+}
+
+.popup__invalid:hover {
+  pointer-events: none;
 }

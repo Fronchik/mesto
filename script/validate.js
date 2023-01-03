@@ -1,24 +1,44 @@
-const checkInputValidity = (input, config) => {
-  const error = document.querySelector(`#${input.id}-error`);
+const popupInvalid = 'popup__invalid';
+
+const showInputError = (form, input, config) => {
+  const error = form.querySelector(`#${input.id}-error`);
+  error.textContent = input.validationMessage;
+  error.classList.add(config.errorClass);
+  input.classList.add(config.inputErrorClass);
+};
+
+const hideInputError = (form, input, config) => {
+  const error = form.querySelector(`#${input.id}-error`);
+  error.textContent = '';
+  error.classList.remove(config.errorClass);
+  input.classList.remove(config.inputErrorClass);
+};
+
+const checkInputValidity = (form, input, config) => {
+  const error = form.querySelector(`#${input.id}-error`);
   if (input.validity.valid) {
-    error.textContent = '';
-    error.classList.remove(config.errorClass);
-    input.classList.remove(config.inputErrorClass);
+    hideInputError(form, input, config);
   } else {
-    error.textContent = input.validationMessage;
-    error.classList.add(config.errorClass);
-    input.classList.add(config.inputErrorClass);
+    showInputError(form, input, config);
   };
 }
 
-const disabledChangeButton = (inputs, button, config) => {
+const enableSubmitButton = (button, classNameDisabled) => {
+  button.classList.remove(classNameDisabled);
+  button.disabled = '';
+}
+
+const disableSubmitButton = (button, classNameDisabled) => {
+  button.classList.add(classNameDisabled);
+  button.disabled = 'disabled';
+}
+
+const setSubmitButtonState = (inputs, button, config) => {
   const formValid = inputs.every(input => input.validity.valid);
   if (formValid) {
-    button.classList.remove(config.inactiveButtonClass);
-    button.disabled = '';
+    enableSubmitButton(button, config.inactiveButtonClass);
   } else {
-    button.classList.add(config.inactiveButtonClass);
-    button.disabled = 'disabled';
+    disableSubmitButton(button, config.inactiveButtonClass);
   };
 };
 
@@ -28,29 +48,21 @@ const enableValidation = (config) => {
   forms.forEach(form => {
     const inputs = [...form.querySelectorAll(config.inputSelector)];
     const button = form.querySelector(config.submitButtonSelector);
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-    });
-
     inputs.forEach(input => {
       input.addEventListener('input', () => {
-        checkInputValidity(input, config);
-        disabledChangeButton(inputs, button, config);
+        checkInputValidity(form, input, config);
+        setSubmitButtonState(inputs, button, config);
       });
     });
-    form.addEventListener('reset', (e) => {
-      // таймаут нужен для того, чтобы дождаться очищения формы
-      setTimeout(() => { disabledChangeButton(inputs, button, config); }, 1);
-    });
+    setSubmitButtonState(inputs, button, config);
   });
-
 };
 
 enableValidation({
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__save',
-  inactiveButtonClass: 'popup__invalid',
+  inactiveButtonClass: popupInvalid,
   inputErrorClass: 'popup__input_error',
   errorClass: 'popup__error_visible'
 });

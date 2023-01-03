@@ -1,5 +1,6 @@
 const profilePopup = document.querySelector('.profile-popup');
-const openProfilePopupButton = document.querySelector('.profile__edit-button');
+const profilePopupButton = document.querySelector('.profile__edit-button');
+const profilePopupSubmitButton = profilePopup.querySelector('.popup__save');
 
 const profileForm = profilePopup.querySelector('.popup__form');
 const nameInput = profilePopup.querySelector('.popup__input_name');
@@ -17,39 +18,11 @@ const previewName = previewPopup.querySelector('.preview__name');
 const cardContainer = document.querySelector('.pictures__list');
 
 const popupCreation = document.querySelector('.creation-popup');
-const openCreationButton = document.querySelector('.profile__add-button');
+const сreationButton = document.querySelector('.profile__add-button');
 
 const cardForm = popupCreation.querySelector('.popup__form');
 const cardNameInput = popupCreation.querySelector('.popup__input_name');
 const cardLinkInput = popupCreation.querySelector('.popup__input_description');
-
-
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
 
 
 const handleEscapeKeyDown = (e) => {
@@ -61,20 +34,20 @@ const handleEscapeKeyDown = (e) => {
 
 const openPopup = (popup) => {
   popup.classList.add('popup_opened');
-  const container = popup.querySelector('.popup__container');
-  container.addEventListener('click', (e) => {
-    if (e.target === container) {
-      closePopup(popup);
-    };
-  });
   document.addEventListener('keydown', handleEscapeKeyDown);
 };
-
 
 const closePopup = (popup) => {
   popup.classList.remove('popup_opened');
   document.removeEventListener('keydown', handleEscapeKeyDown);
 }
+
+document.querySelectorAll('.popup').forEach(container => {
+  container.addEventListener('click', (e) => {
+    closePopup(e.target);
+  });
+});
+
 
 document.querySelectorAll('.popup__close-button').forEach(button => {
   button.addEventListener('click', (e) => {
@@ -82,10 +55,11 @@ document.querySelectorAll('.popup__close-button').forEach(button => {
   });
 });
 
-openProfilePopupButton.addEventListener('click', () => {
+profilePopupButton.addEventListener('click', () => {
   nameInput.value = profileTitle.textContent;
   jobInput.value = profileText.textContent;
   openPopup(profilePopup);
+  enableSubmitButton(profilePopupSubmitButton, popupInvalid);
 })
 
 const handleProfileFormSubmit = (e) => {
@@ -113,7 +87,7 @@ const createCard = (title, link) => {
   cardImg.alt = title;
   cardElement.querySelector('.picture__button').addEventListener('click', handleLikeClick);
   cardElement.querySelector('.picture__basket').addEventListener('click', handleDeleteClick);
-  cardElement.querySelector('.picture__image').addEventListener('click', () => {
+  cardImg.addEventListener('click', () => {
     openPopup(previewPopup);
     previewImg.src = link;
     previewImg.alt = title;
@@ -132,8 +106,9 @@ const loadCards = (cardItems) => {
 
 loadCards(initialCards);
 
-openCreationButton.addEventListener('click', () => {
+сreationButton.addEventListener('click', () => {
   openPopup(popupCreation);
+  cardForm.reset();
 })
 
 const handleCardFormSubmit = (e) => {
@@ -144,6 +119,7 @@ const handleCardFormSubmit = (e) => {
   cardContainer.prepend(card);
   closePopup(popupCreation);
   e.target.reset();
+  disableSubmitButton(e.submitter, popupInvalid);
 }
 
 cardForm.addEventListener('submit', handleCardFormSubmit);
