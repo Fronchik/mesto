@@ -44,14 +44,17 @@ const closePopup = (popup) => {
 
 document.querySelectorAll('.popup').forEach(container => {
   container.addEventListener('click', (e) => {
-    closePopup(e.target);
+    if (e.target.classList.contains('popup')) {
+      closePopup(container);
+    }
   });
 });
 
 
 document.querySelectorAll('.popup__close-button').forEach(button => {
+  const popup = button.closest('.popup');
   button.addEventListener('click', (e) => {
-    closePopup(e.target.closest('.popup'));
+    closePopup(popup);
   });
 });
 

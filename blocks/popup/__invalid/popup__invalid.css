@@ -1,7 +1,10 @@
 .popup__invalid {
-  opacity: 20%;
+  opacity: 50%;
   color: rgba(0, 0, 0);
-  background: #E5E5E5;
+  background-color: #FFFFFF;
+  border-width: 1px;
+  border-color: rgba(0, 0, 0, 0.5);
+
   cursor: default;
 }
 

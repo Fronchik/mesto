@@ -25,12 +25,12 @@ const checkInputValidity = (form, input, config) => {
 
 const enableSubmitButton = (button, classNameDisabled) => {
   button.classList.remove(classNameDisabled);
-  button.disabled = '';
+  button.disabled = false;
 }
 
 const disableSubmitButton = (button, classNameDisabled) => {
   button.classList.add(classNameDisabled);
-  button.disabled = 'disabled';
+  button.disabled = true;
 }
 
 const setSubmitButtonState = (inputs, button, config) => {
