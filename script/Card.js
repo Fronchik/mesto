@@ -1,22 +1,16 @@
-import { openPopup } from "./utils.js";
-
-const previewPopup = document.querySelector('.preview-popup');
-const previewImg = previewPopup.querySelector('.preview__image');
-const previewName = previewPopup.querySelector('.preview__name');
-
-// принимает данные карты и селектор её template-элемента
 class Card {
-  constructor(data, templateSelector) {
+  constructor(data, templateSelector, handleCardClick) {
     this._name = data.name;
     this._link = data.link;
     this._templateSelector = templateSelector;
+    this._handleCardClick = handleCardClick;
   };
 
   _getTemplate() {
     // забираем разметку из HTML и клонируем элемент
     const template = document.querySelector(this._templateSelector)
       .content
-      .children[0]
+      .querySelector('.picture')
       .cloneNode(true);
 
     return template;
@@ -44,17 +38,10 @@ class Card {
     e.target.closest('.picture').remove();
   };
 
-  _handleImageClick() {
-    openPopup(previewPopup);
-    previewImg.src = this._link;
-    previewImg.alt = this._name;
-    previewName.textContent = this._name;
-  }
-
   _setEventListeners() {
     this._element.querySelector('.picture__button').addEventListener('click', this._handleLikeClick);
     this._element.querySelector('.picture__basket').addEventListener('click', this._handleDeleteClick);
-    this._cardImg.addEventListener('click', () => { this._handleImageClick() });
+    this._cardImg.addEventListener('click', () => { this._handleCardClick(this._name, this._link) });
   }
 };
 
