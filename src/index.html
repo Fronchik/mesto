@@ -4,18 +4,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="./pages/index.css" />
   <title>Место</title>
 </head>
 
 <body class="page">
   <header class="header">
-    <img src="./images/Mesto.svg" alt="Логотип Место России" class="logo logo_place_header">
+    <img src="<%=require('./images/Mesto.svg')%>" alt="Логотип Место России" class="logo logo_place_header">
   </header>
   <main class="content">
     <section class="profile">
       <div class="profile__description">
-        <img src="./images/Kusto.jpg" alt="Фото Жак-Ив Кусто" class="profile__image">
+        <img src="<%=require('./images/Kusto.jpg')%>" alt="Фото Жак-Ив Кусто" class="profile__image">
         <div class="profile__info">
           <div class="profile__main">
             <h1 class="profile__title">Жак-Ив Кусто</h1>
@@ -25,7 +24,7 @@
           <p class="profile__text">Исследователь океана</p>
         </div>
         <button class="profile__add-button" aria-label="Кнопка Добавить" type="button">
-          <img src="./images/Plus.svg" alt="Кнопка с Плюсом" class="profile__plus">
+          <img src="<%=require('./images/Plus.svg')%>" alt="Кнопка с Плюсом" class="profile__plus">
         </button>
       </div>
     </section>
@@ -91,7 +90,6 @@
       </div>
     </li>
   </template>
-  <script type="module" src="./script/index.js"></script>
 </body>
 
 </html>
