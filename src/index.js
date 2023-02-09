@@ -1,22 +1,18 @@
 import './pages/index.css';
 
-import Section from "./script/Section.js";
-import PopupWithImage from "./script/PopupWithImage.js"
-import PopupWithForm from "./script/PopupWithForm.js"
-import UserInfo from "./script/UserInfo.js"
-import Card from "./script/Card.js";
-import FormValidator from "./script/FormValidator.js";
-import { initialCards } from "./script/cards.js";
+import Section from "./components/Section.js";
+import PopupWithImage from "./components/PopupWithImage.js"
+import PopupWithForm from "./components/PopupWithForm.js"
+import UserInfo from "./components/UserInfo.js"
+import Card from "./components/Card.js";
+import FormValidator from "./components/FormValidator.js";
+import { initialCards } from "./utils/constants.js";
 
 
 const popupProfileButton = document.querySelector('.profile__edit-button');
-const profileForm = document.querySelector('.popup__form');
-const nameInput = profileForm.querySelector('.popup__input_name');
-const jobInput = profileForm.querySelector('.popup__input_description');
+const profileForm = document.querySelector('#profile-form');
 const сreationButton = document.querySelector('.profile__add-button');
-const cardForm = document.querySelector('.popup__form');
-const cardNameInput = cardForm.querySelector('.popup__input_name');
-const cardLinkInput = cardForm.querySelector('.popup__input_description');
+const cardForm = document.querySelector('#card-form');
 
 
 const userInfo = new UserInfo({
@@ -41,18 +37,14 @@ const cardsList = new Section({
 cardsList.renderItems();
 
 
-const popupProfile = new PopupWithForm('.profile-popup', (e) => {
-  e.preventDefault();
-  userInfo.setUserInfo(nameInput.value, jobInput.value);
+const popupProfile = new PopupWithForm('.profile-popup', (formData) => {
+  userInfo.setUserInfo(formData.name, formData.description);
 });
 popupProfile.setEventListeners();
 
 
-const popupCreation = new PopupWithForm('.creation-popup', (e) => {
-  e.preventDefault();
-  const name = cardNameInput.value;
-  const link = cardLinkInput.value;
-  const cardElement = cardsList.renderer({ name, link })
+const popupCreation = new PopupWithForm('.creation-popup', (formData) => {
+  const cardElement = cardsList.renderer(formData)
   cardsList.addItem(cardElement);
 });
 popupCreation.setEventListeners();
@@ -64,8 +56,7 @@ const formValidators = {};
 
 popupProfileButton.addEventListener('click', () => {
   const info = userInfo.getUserInfo();
-  nameInput.value = info.name;
-  jobInput.value = info.description;
+  popupProfile.setInputValues(info)
   popupProfile.open();
 
   formValidators[profileForm.getAttribute('name')].resetValidation();
