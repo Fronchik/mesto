@@ -1,4 +1,5 @@
 .picture__like {
-  max-width: 22px;
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px;
 }

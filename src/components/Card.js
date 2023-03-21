@@ -2,6 +2,7 @@ class Card {
   constructor(data, templateSelector, handleCardClick) {
     this._name = data.name;
     this._link = data.link;
+    this._likes = data.likes;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
   };
@@ -24,6 +25,7 @@ class Card {
     this._cardImg = this._element.querySelector('.picture__image');
     this._cardImg.alt = this._name;
     this._cardImg.src = this._link;
+    this._element.querySelector('.picture__likes').textContent = this._likes;
 
     // добавим обработчики
     this._setEventListeners();

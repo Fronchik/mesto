@@ -28,8 +28,9 @@
 @import url(../blocks/picture/__basket/picture__basket.css);
 @import url(../blocks/picture/__description/picture__description.css);
 @import url(../blocks/picture/__name/picture__name.css);
-@import url(../blocks/picture/__button/picture__button.css);
 @import url(../blocks/picture/__like/picture__like.css);
+@import url(../blocks/picture/__button/picture__button.css);
+@import url(../blocks/picture/__likes/picture__likes.css);
 
 @import url(../blocks/preview/preview.css);
 @import url(../blocks/preview/__photo/preview__photo.css);

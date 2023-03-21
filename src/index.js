@@ -1,44 +1,73 @@
 import './pages/index.css';
 
+import Api from "./components/Api.js";
 import Section from "./components/Section.js";
 import PopupWithImage from "./components/PopupWithImage.js"
 import PopupWithForm from "./components/PopupWithForm.js"
 import UserInfo from "./components/UserInfo.js"
 import Card from "./components/Card.js";
 import FormValidator from "./components/FormValidator.js";
-import { initialCards } from "./utils/constants.js";
-
 
 const popupProfileButton = document.querySelector('.profile__edit-button');
 const profileForm = document.querySelector('#profile-form');
 const сreationButton = document.querySelector('.profile__add-button');
 const cardForm = document.querySelector('#card-form');
 
-
 const userInfo = new UserInfo({
   nameSelector: '.profile__title',
-  descriptionSelector: '.profile__text'
+  descriptionSelector: '.profile__text',
+  avatarSelector: '.profile__image'
 });
+
+
+// здесь ниже код по 9-ой проектной
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-62',
+  headers: {
+    authorization: '13dd71e2-a4cb-4a97-bac3-d4ec058f8440',
+    'Content-Type': 'application/json'
+  }
+});
+
+api.getProfileInfo()
+  .then((result) => {
+    userInfo.setUserInfo(result.name, result.about, result.avatar);
+    // обрабатываем результат
+  })
+  .catch((err) => {
+    console.log(err); // выведем ошибку в консоль
+  });
 
 
 const previewPopup = new PopupWithImage('.preview-popup');
 previewPopup.setEventListeners();
 
 // создание массива и добавление карточек
-const cardsList = new Section({
-  items: initialCards,
-  renderer: (item) => {
+const cardsList = new Section(
+  (item) => {
     const card = new Card(item, '#card-template', (name, link) => { previewPopup.open(name, link) });
     const cardElement = card.generateCard();
     return cardElement;
   }
-}, ".pictures__list")
+  , ".pictures__list")
 
-cardsList.renderItems();
+api.getInitialCards()
+  .then((result) => {
+    cardsList.renderItems(result);
+  })
+  .catch((err) => {
+    console.log(err); // выведем ошибку в консоль
+  });
 
 
 const popupProfile = new PopupWithForm('.profile-popup', (formData) => {
-  userInfo.setUserInfo(formData.name, formData.description);
+  api.editProfile(formData.name, formData.description)
+    .then((result) => {
+      userInfo.setUserInfo(result.name, result.about);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 popupProfile.setEventListeners();
 
