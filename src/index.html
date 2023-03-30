@@ -53,6 +53,16 @@
     </div>
   </section>
 
+  <!-- <section class="popup update-popup">
+    <div class="popup__content-update">
+      <button class="popup__close-button" aria-label="Кнопка закрытия" type="button"></button>
+      <h2 class="popup__title">Обновить аватар</h2>
+      <form id="card-form" class="popup__form" name="card-form" novalidate>
+        <input id="link" class="popup__input popup__input_description" name="link" type="url" required>
+        <button class="popup__save" aria-label="Кнопка сохранения" type="submit">Сохранить</button>
+    </div>
+  </section> -->
+
   <section class="popup creation-popup">
     <div class="popup__content">
       <button class="popup__close-button" aria-label="Кнопка закрытия" type="button"></button>
@@ -79,13 +89,14 @@
     </div>
   </section>
 
-  <section class="popup confirm-popup">
-    <div class="popup__content">
+  <section class="popup agree-popup">
+    <div class="popup__content-small">
       <button class="popup__close-button" aria-label="Кнопка закрытия" type="button"></button>
       <h2 class="popup__title">Вы уверены?</h2>
-      <button class="popup__save" aria-label="Кнопка подтверждения" type="submit">Да</button>
+      <button class="popup__agree" aria-label="Кнопка подтверждения" type="submit">Да</button>
     </div>
   </section>
+
   <template id="card-template">
     <li class="picture">
       <button class="picture__basket" aria-label="Корзина для удаления фото" type="button">
