@@ -77,25 +77,6 @@ export default class Api {
       })
   }
 
-  // addNewCard(name, link) {
-  //   return Promise.all([new Promise(res => setTimeout(res, 3000)), fetch(this.baseUrl + '/cards', {
-  //     method: 'POST',
-  //     headers: this.headers,
-  //     body: JSON.stringify({
-  //       name, link
-  //     })
-  //   })])
-  //     .then(res => {
-  //       if (res.ok) {
-  //         return res.json();
-  //       }
-  //       return Promise.reject(`Ошибка: ${res.status}`);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     })
-  // }
-
   // Удаление карточки
   deleteCard(cardId) {
     return fetch(this.baseUrl + `/cards/${cardId}`, {
