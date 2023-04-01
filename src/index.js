@@ -9,10 +9,12 @@ import UserInfo from "./components/UserInfo.js"
 import Card from "./components/Card.js";
 import FormValidator from "./components/FormValidator.js";
 
+const popupAvatarButton = document.querySelector('.profile__avatar-button');
 const popupProfileButton = document.querySelector('.profile__edit-button');
 const profileForm = document.querySelector('#profile-form');
 const сreationButton = document.querySelector('.profile__add-button');
 const cardForm = document.querySelector('#card-form');
+// вроде нигде не применяется?удалить?
 const basketButtonRemove = document.querySelector('.picture__basket');
 
 const userInfo = new UserInfo({
@@ -77,6 +79,21 @@ api.getInitialCards()
     console.log(err);
   });
 
+const popupAvatar = new PopupWithForm('.avatar-popup', (formData) => {
+  popupAvatar.setButtonText('Сохранение...');
+  api.updateUserAvatar(formData.link)
+    .then((result) => {
+      userInfo.setUserInfo(result.name, result.about, result.avatar, result.link);
+    })
+    .finally(() => {
+      popupAvatar.setButtonText('Сохранить');
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+});
+popupAvatar.setEventListeners();
+
 const popupProfile = new PopupWithForm('.profile-popup', (formData) => {
   popupProfile.setButtonText('Сохранение...');
   api.editProfile(formData.name, formData.description)
@@ -118,6 +135,12 @@ popupCreation.setEventListeners();
 const popupInvalid = 'popup__invalid';
 
 const formValidators = {};
+
+popupAvatarButton.addEventListener('click', () => {
+  popupAvatar.open();
+  cardForm.reset();
+  formValidators[cardForm.getAttribute('name')].resetValidation();
+})
 
 popupProfileButton.addEventListener('click', () => {
   const info = userInfo.getUserInfo();

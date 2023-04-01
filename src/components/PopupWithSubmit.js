@@ -5,16 +5,6 @@ export default class PopupWithSubmit extends Popup {
     this._submit = callback;
   }
 
-  // export default class PopupWithSubmit extends Popup {
-  //   constructor(selector) {
-  //     super(selector);
-  //   }
-
-  //   onSubmit(callback) {
-  //     this._submit = callback;
-  //   }
-
-
   setEventListeners() {
     super.setEventListeners();
     const button = this._popup.querySelector('.popup__agree');
