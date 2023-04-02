@@ -6,9 +6,9 @@ export default class Section {
   }
 
   // отвечает за отрисовку всех элементов
-  renderItems(items) {
+  renderItems(items, myId) {
     items.forEach(item => {
-      this._container.append(this.renderer(item));
+      this._container.append(this.renderer(item, myId));
     });
   }
 

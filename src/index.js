@@ -14,8 +14,6 @@ const popupProfileButton = document.querySelector('.profile__edit-button');
 const profileForm = document.querySelector('#profile-form');
 const сreationButton = document.querySelector('.profile__add-button');
 const cardForm = document.querySelector('#card-form');
-// вроде нигде не применяется?удалить?
-const basketButtonRemove = document.querySelector('.picture__basket');
 
 const userInfo = new UserInfo({
   nameSelector: '.profile__title',
@@ -31,16 +29,6 @@ const api = new Api({
   }
 });
 
-// Загрузка информации о пользователе с сервера
-api.getProfileInfo()
-  .then((result) => {
-    userInfo.setUserInfo(result.name, result.about, result.avatar);
-    // обрабатываем результат
-  })
-  .catch((err) => {
-    console.log(err); // выведем ошибку в консоль
-  });
-
 const previewPopup = new PopupWithImage('.preview-popup');
 previewPopup.setEventListeners();
 
@@ -50,7 +38,7 @@ popupAgree.setEventListeners();
 
 // Создание массива и добавление карточек
 const cardsList = new Section(
-  (item) => {
+  (item, myId) => {
     const card = new Card(item, '#card-template',
       (name, link) => { previewPopup.open(name, link) },
       (cardId, onSuccess) => {
@@ -63,20 +51,43 @@ const cardsList = new Section(
             })
         })
       },
-      123
+      (cardId, updateLikes) => {
+        api.setLike(cardId)
+          .then(result => {
+            updateLikes(result.likes)
+          });
+      },
+      (cardId, updateLikes) => {
+        api.deleteLike(cardId)
+          .then(result => {
+            updateLikes(result.likes)
+          });
+      },
+      myId
     );
     const cardElement = card.generateCard();
     return cardElement;
   }
   , ".pictures__list")
 
-// Загрузка карточек с сервера
-api.getInitialCards()
-  .then((result) => {
-    cardsList.renderItems(result);
+let userId;
+
+// Загрузка информации о пользователе с сервера
+api.getProfileInfo()
+  .then((userData) => {
+    userInfo.setUserInfo(userData.name, userData.about, userData.avatar);
+    userId = userData._id;
+    // Загрузка карточек с сервера
+    api.getInitialCards()
+      .then((result) => {
+        cardsList.renderItems(result, userId);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   })
   .catch((err) => {
-    console.log(err);
+    console.log(err); // выведем ошибку в консоль
   });
 
 const popupAvatar = new PopupWithForm('.avatar-popup', (formData) => {
@@ -109,18 +120,11 @@ const popupProfile = new PopupWithForm('.profile-popup', (formData) => {
 });
 popupProfile.setEventListeners();
 
-
-// const popupCreation = new PopupWithForm('.creation-popup', (formData) => {
-//   const cardElement = cardsList.renderer(formData)
-//   cardsList.addItem(cardElement);
-// });
-// popupCreation.setEventListeners();
-
 const popupCreation = new PopupWithForm('.creation-popup', (formData) => {
   popupCreation.setButtonText('Сохранение...');
   api.addNewCard(formData.name, formData.link)
     .then((result) => {
-      const cardElement = cardsList.renderer(result);
+      const cardElement = cardsList.renderer(result, userId);
       cardsList.addItem(cardElement);
     })
     .finally(() => {

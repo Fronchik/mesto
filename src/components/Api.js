@@ -95,13 +95,10 @@ export default class Api {
   }
 
   // Постановка лайка
-  setLike(likes) {
+  setLike(cardId) {
     return fetch(this.baseUrl + `/cards/${cardId}/likes`, {
       method: 'PUT',
       headers: this.headers,
-      body: JSON.stringify({
-        likes
-      })
     })
       .then(res => {
         if (res.ok) {
@@ -115,13 +112,10 @@ export default class Api {
   }
 
   // Снятие лайка
-  deleteLike(likes) {
+  deleteLike(cardId) {
     return fetch(this.baseUrl + `/cards/${cardId}/likes`, {
       method: 'DELETE',
       headers: this.headers,
-      body: JSON.stringify({
-        likes
-      })
     })
       .then(res => {
         if (res.ok) {
