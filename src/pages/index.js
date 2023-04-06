@@ -1,13 +1,13 @@
-import './pages/index.css';
+import './index.css';
 
-import Api from "./components/Api.js";
-import Section from "./components/Section.js";
-import PopupWithImage from "./components/PopupWithImage.js"
-import PopupWithForm from "./components/PopupWithForm.js"
-import PopupWithSubmit from './components/PopupWithSubmit.js';
-import UserInfo from "./components/UserInfo.js"
-import Card from "./components/Card.js";
-import FormValidator from "./components/FormValidator.js";
+import Api from "../components/Api.js";
+import Section from "../components/Section.js";
+import PopupWithImage from "../components/PopupWithImage.js"
+import PopupWithForm from "../components/PopupWithForm.js"
+import PopupWithSubmit from '../components/PopupWithSubmit.js';
+import UserInfo from "../components/UserInfo.js"
+import Card from "../components/Card.js";
+import FormValidator from "../components/FormValidator.js";
 
 const popupAvatarButton = document.querySelector('.profile__avatar-button');
 const popupProfileButton = document.querySelector('.profile__edit-button');
@@ -49,18 +49,27 @@ const cardsList = new Section(
               onSuccess();
               popupAgree.close();
             })
+            .catch((err) => {
+              console.log(err);
+            });
         })
       },
       (cardId, updateLikes) => {
         api.setLike(cardId)
           .then(result => {
             updateLikes(result.likes)
+          })
+          .catch((err) => {
+            console.log(err);
           });
       },
       (cardId, updateLikes) => {
         api.deleteLike(cardId)
           .then(result => {
             updateLikes(result.likes)
+          })
+          .catch((err) => {
+            console.log(err);
           });
       },
       myId
@@ -70,68 +79,62 @@ const cardsList = new Section(
   }
   , ".pictures__list")
 
-let userId;
-
-// Загрузка информации о пользователе с сервера
-api.getProfileInfo()
-  .then((userData) => {
-    userInfo.setUserInfo(userData.name, userData.about, userData.avatar);
-    userId = userData._id;
-    // Загрузка карточек с сервера
-    api.getInitialCards()
-      .then((result) => {
-        cardsList.renderItems(result, userId);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+// Загрузка информации о пользователе с сервера, Загрузка карточек с сервера
+Promise.all([api.getProfileInfo(), api.getInitialCards()])
+  .then(([userData, cards]) => {
+    userInfo.setUserInfo(userData);
+    cardsList.renderItems(cards, userData._id);
   })
   .catch((err) => {
-    console.log(err); // выведем ошибку в консоль
+    console.log(err);
   });
 
 const popupAvatar = new PopupWithForm('.avatar-popup', (formData) => {
-  popupAvatar.setButtonText('Сохранение...');
+  popupAvatar.renderLoading(true);
   api.updateUserAvatar(formData.link)
     .then((result) => {
-      userInfo.setUserInfo(result.name, result.about, result.avatar, result.link);
-    })
-    .finally(() => {
-      popupAvatar.setButtonText('Сохранить');
+      userInfo.setUserInfo(result);
+      // userInfo.setUserInfo(result.name, result.about, result.avatar, result.link);
+      popupAvatar.close();
     })
     .catch((err) => {
       console.log(err);
+    })
+    .finally(() => {
+      popupAvatar.renderLoading(false);
     })
 });
 popupAvatar.setEventListeners();
 
 const popupProfile = new PopupWithForm('.profile-popup', (formData) => {
-  popupProfile.setButtonText('Сохранение...');
+  popupProfile.renderLoading(true);
   api.editProfile(formData.name, formData.description)
     .then((result) => {
-      userInfo.setUserInfo(result.name, result.about, result.avatar);
-    })
-    .finally(() => {
-      popupProfile.setButtonText('Сохранить');
+      userInfo.setUserInfo(result);
+      popupProfile.close();
     })
     .catch((err) => {
       console.log(err);
+    })
+    .finally(() => {
+      popupProfile.renderLoading(false);
     })
 });
 popupProfile.setEventListeners();
 
 const popupCreation = new PopupWithForm('.creation-popup', (formData) => {
-  popupCreation.setButtonText('Сохранение...');
+  popupCreation.renderLoading(true);
   api.addNewCard(formData.name, formData.link)
     .then((result) => {
-      const cardElement = cardsList.renderer(result, userId);
+      const cardElement = cardsList.renderer(result, result.owner._id);
       cardsList.addItem(cardElement);
-    })
-    .finally(() => {
-      popupCreation.setButtonText('Сохранить');
+      popupCreation.close();
     })
     .catch((err) => {
       console.log(err);
+    })
+    .finally(() => {
+      popupCreation.renderLoading(false);
     })
 });
 popupCreation.setEventListeners();
@@ -142,7 +145,6 @@ const formValidators = {};
 
 popupAvatarButton.addEventListener('click', () => {
   popupAvatar.open();
-  cardForm.reset();
   formValidators[cardForm.getAttribute('name')].resetValidation();
 })
 
@@ -156,7 +158,6 @@ popupProfileButton.addEventListener('click', () => {
 
 сreationButton.addEventListener('click', () => {
   popupCreation.open();
-  cardForm.reset();
   formValidators[cardForm.getAttribute('name')].resetValidation();
 })
 

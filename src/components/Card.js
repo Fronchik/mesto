@@ -78,7 +78,6 @@ class Card {
     });
 
     this._heart.addEventListener('click', () => {
-      console.log(this._myId);
       if (this._likedByMe()) {
         this._onDislike(this._id, this._updateLikes);
       } else {
